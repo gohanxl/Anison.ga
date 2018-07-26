@@ -11,10 +11,10 @@ $requestamount = Requests::count();
         <ul class="navbar-nav">
             <li class="nav-item active"><a class="nav-link" href="<?= route('home');?>">Songs <span class="badge badge-light"><?= $songamount?></span></a></li>
             <li class="nav-item"><a class="nav-link" href="<?= route('requests');?>">Requests <span class="badge badge-light"><?= $requestamount?></span></a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= route('newRequest');?>">Request</span></a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Extra</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="<?= route('newRequest');?>">Request</a>
                     <a class="dropdown-item" href="<?= route('discord');?>">Discord</a>
                     <a class="dropdown-item" href="<?= route('github');?>">GitHub</a>
                     <a class="dropdown-item" href="<?= route('paypal');?>">Donate</a>
