@@ -25,7 +25,7 @@ $animelink="https://anilist.co/anime/{$song->animeid}";
 </div>@endif<br>
 
 @notmobile
-<button class="btn btn-outline-dark btn-lg btn-block audio" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"">Show/hide anime info</button>
+<button class="btn btn-outline-dark btn-lg btn-block audio" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">Show/hide anime info</button>
 <div class="collapse" id="collapseInfo"><br>
     <div class="card audio text-center">
         <div class="card-header">Anime Info</div>
@@ -43,7 +43,6 @@ $animelink="https://anilist.co/anime/{$song->animeid}";
     </div>
 </div>
 <script type="text/javascript">
-    // Define the query
     var query = `query ($id: Int) {
       Media (id: $id, type: ANIME) {
         id
@@ -71,13 +70,11 @@ $animelink="https://anilist.co/anime/{$song->animeid}";
       }
     }
     `;
-    // Define the query variables and values that will be used in the query request
+    
     var variables = {
         id: {{$song->animeid}}
     };
 
-
-    // Define the config for the Api request
     var url = 'https://graphql.anilist.co',
     options = {
         method: 'POST',
@@ -88,7 +85,6 @@ $animelink="https://anilist.co/anime/{$song->animeid}";
         body: ""
     };
 
-    // Make the HTTP Api request
     function makeRequest() {
         options.body = JSON.stringify({
             query: query,
@@ -108,12 +104,14 @@ $animelink="https://anilist.co/anime/{$song->animeid}";
     }
 
     function handleData(data) {
-        var dt = data.data.Media; //Aliased for simplicity
+        var dt = data.data.Media;
+        startDate = (dt.startDate.month + "/" + dt.startDate.day + "/" + dt.startDate.year + "" == "null/null/null") ? 'TBD' :  (dt.startDate.month + "/" + dt.startDate.day + "/" + dt.startDate.year);
+        endDate = (dt.endDate.month + "/" + dt.endDate.day + "/" + dt.endDate.year == "null/null/null") ? 'TBD' :  (dt.endDate.month + "/" + dt.endDate.day + "/" + dt.endDate.year);
         document.getElementById('description').innerHTML += dt.description;
         document.getElementById('episodes').innerHTML += dt.episodes;
         document.getElementById('duration').innerHTML += dt.duration + " minutes";
-        document.getElementById('started').innerHTML += dt.startDate.month + "/" + dt.startDate.day + "/" + dt.startDate.year;
-        document.getElementById('ended').innerHTML += dt.endDate.month + "/" + dt.endDate.day + "/" + dt.endDate.year;
+        document.getElementById('started').innerHTML += startDate;
+        document.getElementById('ended').innerHTML += endDate;
         document.getElementById('title').innerHTML = dt.title.romaji + " | " + dt.title.native;
         document.getElementById('cover').src = dt.coverImage.large;
     }

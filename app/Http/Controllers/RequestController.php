@@ -2,30 +2,32 @@
 
 namespace Anison\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Anison\Requests;
+use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
-
     // All requests
 
-    public function index() {
+    public function index()
+    {
         $requests = Requests::all();
+
         return view('requests')->with('requests', $requests);
     }
 
     // Submitting requests
 
-    public function submit(Request $request){
+    public function submit(Request $request)
+    {
         $this->validate($request, [
-            'song' => 'required',
+            'song'  => 'required',
             'anime' => 'required',
-            'link' => 'required',
+            'link'  => 'required',
         ]);
 
         // Create new request
-        $requests = new Requests;
+        $requests = new Requests();
         $requests->song = $request->input('song');
         $requests->anime = $request->input('anime');
         $requests->link = $request->input('link');

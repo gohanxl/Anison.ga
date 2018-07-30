@@ -2,39 +2,43 @@
 
 namespace Anison\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Anison\Song;
+use Illuminate\Http\Request;
 
 class SongController extends Controller
 {
-
     // All songs
 
-    public function index() {
+    public function index()
+    {
         $song = Song::all();
+
         return view('songs')->with('song', $song);
     }
 
     // Retrieve data for play page
 
-    public function play($id) {
+    public function play($id)
+    {
         $song = Song::find($id);
+
         return view('play')->with('song', $song);
     }
 
     // Submitting songs
 
-    public function submit(Request $request){
+    public function submit(Request $request)
+    {
         $this->validate($request, [
-            'song' => 'required',
-            'artist' => 'required',
-            'anime' => 'required',
+            'song'    => 'required',
+            'artist'  => 'required',
+            'anime'   => 'required',
             'animeid' => 'required',
             'audioid' => 'required',
         ]);
 
         // Create new song
-        $songs = new Song;
+        $songs = new Song();
         $songs->song = $request->input('song');
         $songs->artist = $request->input('artist');
         $songs->artistid = $request->input('artistid');
